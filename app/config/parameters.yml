@@ -12,3 +12,4 @@ parameters:
     mailer_password: pass
     locale: en
     secret: changeit
+    symfony_api.end_point: 'http://symfony-api.localhost:8080/app_dev.php'

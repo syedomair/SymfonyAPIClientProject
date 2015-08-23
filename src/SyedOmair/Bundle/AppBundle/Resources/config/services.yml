@@ -1,0 +1,5 @@
+services:
+     client_service:
+        class: SyedOmair\Bundle\AppBundle\Services\ApiClientService
+        arguments: [@service_container, %symfony_api.end_point%]
+
