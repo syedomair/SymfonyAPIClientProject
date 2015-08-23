@@ -1,0 +1,5 @@
+
+app_index:
+    pattern:  /
+    defaults: { _controller: AppBundle:Catalog:index }
+
