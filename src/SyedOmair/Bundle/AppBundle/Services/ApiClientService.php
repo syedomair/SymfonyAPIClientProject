@@ -38,7 +38,7 @@ class ApiClientService
     public function findProduct($product_id)
     {
         $client = new Client($this->end_point);
-        $request = $client->get('api/products/'.$product_id);
+        $request = $client->get('api/product/'.$product_id);
         $response = $request->send();
         $responseBody= $response->getBody();
         $responseArray = json_decode($responseBody, true);

@@ -34,8 +34,18 @@ class CatalogController extends Controller
                 ));
     }
 
-    public function getCatalogAction($catalog_id)
+    public function getProductDetailAction()
     {
+        $request = $this->getRequest();
+        $product_id = $request->get('product_id');
+
+        $api = $this->get('client_service')->findProduct($product_id);
+        $product = $api['data']['product'];
+
+        return $this->render('AppBundle:Catalog:product_detail.html.twig',
+                array(
+                    'product' => $product 
+                ));
     }
 
 }

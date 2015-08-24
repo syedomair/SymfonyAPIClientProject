@@ -6,3 +6,7 @@ app_index:
 app_product_list:
     pattern:  /products
     defaults: { _controller: AppBundle:Catalog:getProductList }
+
+app_product_detail:
+    pattern:  /product
+    defaults: { _controller: AppBundle:Catalog:getProductDetail }
