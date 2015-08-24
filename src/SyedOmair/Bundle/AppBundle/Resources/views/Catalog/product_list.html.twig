@@ -1,12 +1,17 @@
 
 <div id="posts" class="row">
+
     {% for product in products %}
-    <div id="1" class="item web col-sm-3">
-        <div class="item-wrap">
-            <img class="img-responsive" src="{{asset('bundles/app/catalog_images/'~product['image'])}}" >
-            <p>{{product['price']}}</p>
-            <a href="javascript:void(0)" onclick="getProductDetail({{product['id']}});" >{{product['name']}}</a>
+        <div class="item web col-sm-3">
+            <div class="product">
+                <a href="javascript:void(0)" onclick="getProductDetail({{product['id']}});" >
+                    <img class="img-responsive" src="{{asset('bundles/app/catalog_images/'~product['image'])}}" >
+                    <p><b>{{product['name']}}</b></p>
+                    <p>Price: {{product['price']}}</p>
+                    SKU: {{product['sku']}}
+                </a>
+            </div>
         </div>
-    </div>
     {% endfor %}
+
 </div>
