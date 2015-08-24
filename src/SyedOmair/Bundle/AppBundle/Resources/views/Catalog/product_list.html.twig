@@ -1,0 +1,12 @@
+
+    <div id="posts" class="row">
+        {% for product in products %}
+        <div id="1" class="item web col-sm-3">
+            <div class="item-wrap">
+                <img class="img-responsive" src="{{asset('bundles/app/catalog_images/'~product['image'])}}" >
+                <p>{{product['price']}}</p>
+                {{product['name']}}
+            </div>
+        </div>
+        {% endfor %}
+    </div>

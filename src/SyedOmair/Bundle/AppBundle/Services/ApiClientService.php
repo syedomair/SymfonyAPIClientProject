@@ -25,7 +25,17 @@ class ApiClientService
         return $responseArray;
     }
 
-    public function findProducts($product_id)
+    public function findProducts($category_id)
+    {
+        $client = new Client($this->end_point);
+        $request = $client->get('api/products/'.$category_id);
+        $response = $request->send();
+        $responseBody= $response->getBody();
+        $responseArray = json_decode($responseBody, true);
+        return $responseArray;
+    }
+
+    public function findProduct($product_id)
     {
         $client = new Client($this->end_point);
         $request = $client->get('api/products/'.$product_id);
