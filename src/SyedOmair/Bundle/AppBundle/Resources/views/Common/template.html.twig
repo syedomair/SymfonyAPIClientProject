@@ -10,11 +10,11 @@
 
             <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 			
-            <link rel="stylesheet" href="{{asset('bundles/app/css/bootstrap.css')}}">
             <link rel="stylesheet" href="{{asset('bundles/app/css/my_style.css')}}">
-
+            <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <!-- Jquery -->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+            <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
         {% block head %}{% endblock %}        
     </head>
@@ -40,6 +40,124 @@
             {% block page_footer %}
                 <p>The "page_footer" block</p>
             {% endblock %}
+
+            {% if not app.session.get('authenticated') %}
+                <!-- begin:modal-sign-in -->
+                <div class="modal fade" id="modal-sign-in" tabindex="-1" role="dialog" aria-labelledby="modal-sign-in" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+
+                            <form role="form" id="form_sign_in" action="" method="POST">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">Sign In</h4> </div>
+                                <div class="modal-body">
+                                    <p style="color:red" id="err_sign_in"></p>
+                                    <div class="form-group">
+                                        <input type='text' name='email' class='form-control' placeholder='Email address' />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type='password' name='password' class='form-control' placeholder='Password' />
+                                    </div>
+                                </div>
+                                <div class="modal-footer  text-left">
+                                        <input type='submit' name='email' class='btn branding-background btn-block btn-lg' value='Sign In' />
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- begin:modal-signup -->
+                <div class="modal fade" id="modal-register" tabindex="-1" role="dialog" aria-labelledby="modal-register" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+
+                            <form role="form" id="form_register" action="" method="POST">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">Register</h4> </div>
+                                <div class="modal-body">
+                                    <p style="color:red; display: none; font-size: 11px" id="err_register"></p>
+                                    <div class="row form-group">
+                                        <div class="col-md-6">
+                                            <input type='text' name='given_name' class='form-control' placeholder='First Name' />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type='text' name='family_name' class='form-control' placeholder='Last Name' />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type='text' name='email' class='form-control' placeholder='Email address' />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type='password' name='password' class='form-control' placeholder='Password' />
+                                        <div style="color: red; font-size: 12px; display: none" id="error_pass">Passwords must be at least 8 characters and must contain at least     one number.</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type='confirmPassword' name='password' class='form-control' placeholder='Confirm Password' />
+                                    </div>
+                                </div>
+                                <div class="modal-footer text-left">
+                                        <input type='submit' name='email' class='btn branding-background btn-block btn-lg' value='Register' />
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+<script>
+$(document).ready(function () {
+    $('#form_sign_in').on('submit', function (e) {
+        //e.stopPropagation();
+        $.ajax({
+            type: "POST",
+            url: '{{path('app_sign_in')}}',
+            data: { email:'email@gmail.com', password: '12345' },
+            success: function (data)
+            {
+                var returnData = JSON.parse(data);
+                if (!returnData['success']) {
+                    alert('kahld');
+                    //$('#pError').html(obj['error']);
+                    //$('#pError').show();
+                    return false;
+                } else {
+                    // Redirect
+                    window.location.href = returnData['url'];
+                }
+            }
+        });
+        return false;
+    });
+
+    $('#form_register').on('submit', function (e) {
+        //e.stopPropagation();
+        $.ajax({
+            type: "POST",
+            url: '{{path('app_register')}}',
+            data: { email:'email@gmail.com', password: '12345', first_name:'syed', last_name:'omair' },
+            success: function (data)
+            {
+                var returnData = JSON.parse(data);
+                if (!returnData['success']) {
+                    alert('kahld');
+                    //$('#pError').html(obj['error']);
+                    //$('#pError').show();
+                    return false;
+                } else {
+                    // Redirect
+                    window.location.href = returnData['url'];
+                }
+            }
+        });
+        return false;
+    });
+
+});
+</script>
+            {% endif %}
 
         </div> <!-- End of main container element -->
 

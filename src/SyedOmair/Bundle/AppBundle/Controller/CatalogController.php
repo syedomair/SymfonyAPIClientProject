@@ -7,13 +7,18 @@ class CatalogController extends Controller
 {
     public function indexAction(){
 
+        return $this->render('AppBundle:Catalog:index.html.twig');
+    }
+
+    public function getProductsAction(){
+
         $api = $this->get('client_service')->findCategories('1');
         $categories = $api['data']['records'];
 
         $api = $this->get('client_service')->findProducts('1');
         $products = $api['data']['records'];
 
-        return $this->render('AppBundle:Catalog:index.html.twig',
+        return $this->render('AppBundle:Catalog:products.html.twig',
                 array(
                     'categories' => $categories, 
                     'products' => $products 

@@ -5,7 +5,6 @@
   margin: 40;
   background-color: #b0d8ed;
 }
-
 .navbar-header {
   padding-left: 16px;
 }
@@ -14,6 +13,7 @@
   height: auto;
   overflow: hidden;
   padding: 10px 0px 0px;
+  height:90px !important;
 }
 
 .navbar-default .navbar-nav > li > a:hover {

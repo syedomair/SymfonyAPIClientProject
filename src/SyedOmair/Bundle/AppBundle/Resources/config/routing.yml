@@ -3,10 +3,22 @@ app_index:
     pattern:  /
     defaults: { _controller: AppBundle:Catalog:index }
 
-app_product_list:
+app_products:
     pattern:  /products
+    defaults: { _controller: AppBundle:Catalog:getProducts }
+
+app_product_list:
+    pattern:  /product_list
     defaults: { _controller: AppBundle:Catalog:getProductList }
 
 app_product_detail:
     pattern:  /product
     defaults: { _controller: AppBundle:Catalog:getProductDetail }
+
+app_sign_in:
+    pattern:  /sign-in
+    defaults: { _controller: AppBundle:Public:signIn }
+
+app_register:
+    pattern:  /register
+    defaults: { _controller: AppBundle:Public:register }

@@ -18,65 +18,17 @@
                 <h4></h4>
             </div><!-- End of column one -->
 			
-            <div class="col-md-6 text-right">
-                <ul class="breadcrumb">
-                    {% for category in categories %}
-                        <li><a href="javascript:void(0)" onclick="getProduct({{category['id']}});" >{{category['name']}}</a></li>
-                    {% endfor %}
-                </ul>
-            </div><!-- End of column two -->
         </div><!-- End of row -->	
     </div><!-- End of container -->
 </div><!-- End of fluid container -->
 
-{#{dump(products)}#}
 <div class="container-fluid no-gutter">
 
     <div id="page_body">
-        {% include('AppBundle:Catalog:product_list.html.twig') %}
+        Home Page
     </div>
 
 </div>
 
-{% endblock %}
-
-{% block javascripts %}
-    <script type="text/javascript">
-
-        function getProduct(id){
-            $.ajax({
-                type: "POST",
-                url: '{{path('app_product_list') }}',
-                data: { category_id:id },
-                success: function (data)
-                {
-                    $("#page_body").html(data);
-                },
-                error: function ()
-                {
-                    alert('error' );
-                }
-            });
-        }
-
-        function getProductDetail(id){
-            $.ajax({
-                type: "POST",
-                url: '{{path('app_product_detail') }}',
-                data: { product_id:id },
-                success: function (data)
-                {
-                    $("#page_body").html(data);
-                },
-                error: function ()
-                {
-                    alert('error' );
-                }
-            });
-        }
-
-        $(document).ready(function () {
-        });
-    </script>
 {% endblock %}
 

@@ -2,8 +2,10 @@
 <nav class="navbar" >
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="{{ path('app_index')}}">
                 <img src="{{asset('bundles/app/images/logo.jpg')}}" alt="Store Logo" height="60" width="60">
+            </a>
+            <a class="navbar-brand" href="{{ path('app_index')}}">
                 Symfony Sample API Client Application
             </a>
         </div><!-- End of navbar header -->
@@ -12,7 +14,19 @@
                 <li class="active">
                     <a href="{{ path('app_index')}}">Home</a>
                 </li>       	
+                <li class="">
+                    <a href="#modal-sign-in" class="" data-toggle="modal" data-target="#modal-sign-in">Sign In</a>
+                </li>       	
+                <li class="">
+                    <a href="#modal-register" class="" data-toggle="modal" data-target="#modal-register">Register</a>
+                </li>       	
+
             </ul>
         </div><!-- End of nav-collapse -->                
     </div><!-- End of container class -->
 </nav><!-- End of navigation -->
+
+
+
+
+

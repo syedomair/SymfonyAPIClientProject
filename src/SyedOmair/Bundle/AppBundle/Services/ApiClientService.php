@@ -1,48 +1,43 @@
 <?php
-
 namespace SyedOmair\Bundle\AppBundle\Services;
 
-use Guzzle\Http\Client;
+use Symfony\Component\HttpFoundation\Session\Session;
 
-class ApiClientService
+class ApiClientService extends BaseClientService
 {
-    protected $container;
-    protected $end_point;
 
-    public function __construct($container, $api_server_end_point)
+    public function __construct($container, $api_server_end_point, Session $session)
     {
-        $this->container = $container;
-        $this->end_point = $api_server_end_point;
+        parent::__construct($container, $api_server_end_point, $session);
     }
 
     public function findCategories($catalog_id)
     {
-        $client = new Client($this->end_point);
-        $request = $client->get('api/categories/'.$catalog_id);
-        $response = $request->send();
-        $responseBody= $response->getBody();
-        $responseArray = json_decode($responseBody, true);
-        return $responseArray;
+        return $this->getRequest('api/categories/'.$catalog_id);
     }
 
     public function findProducts($category_id)
     {
-        $client = new Client($this->end_point);
-        $request = $client->get('api/products/'.$category_id);
-        $response = $request->send();
-        $responseBody= $response->getBody();
-        $responseArray = json_decode($responseBody, true);
-        return $responseArray;
+        return $this->getRequest('api/products/'.$category_id);
     }
 
     public function findProduct($product_id)
     {
-        $client = new Client($this->end_point);
-        $request = $client->get('api/product/'.$product_id);
-        $response = $request->send();
-        $responseBody= $response->getBody();
-        $responseArray = json_decode($responseBody, true);
-        return $responseArray;
+        return $this->getRequest('api/product/'.$product_id);
     }
 
+    public function createUser($parameters)
+    {
+        return $this->postNewRequest('api/user', $parameters);
+    }
+
+    public function authenticate($username, $password)
+    {
+        $this->session->set('username', $username);
+        //$encrypt = new Encrypt();
+        //$encryptedPass = $encrypt->encrypt($password, 'custom_api_secret');
+        $this->session->set('password', $password);
+
+        return $this->getRequest('api/authenticate');
+    }
 }
