@@ -6,9 +6,9 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class ApiClientService extends BaseClientService
 {
 
-    public function __construct($container, $api_server_end_point, Session $session)
+    public function __construct($backend_api_server_end_point, Session $session)
     {
-        parent::__construct($container, $api_server_end_point, $session);
+        parent::__construct($backend_api_server_end_point, $session);
     }
 
     public function findCategories($catalog_id)
@@ -34,10 +34,7 @@ class ApiClientService extends BaseClientService
     public function authenticate($username, $password)
     {
         $this->session->set('username', $username);
-        //$encrypt = new Encrypt();
-        //$encryptedPass = $encrypt->encrypt($password, 'custom_api_secret');
         $this->session->set('password', $password);
-
         return $this->getRequest('api/authenticate');
     }
 }

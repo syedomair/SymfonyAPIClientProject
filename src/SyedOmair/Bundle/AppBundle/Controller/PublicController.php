@@ -18,6 +18,7 @@ class PublicController extends Controller
         $error = '';
 
         if ($request->isMethod('POST')) {
+            $logger->info('password='.$password);
             $api = $this->get('client_service')->authenticate($email, $password);
             $logger->info('authenticate='.json_encode($api));
 
