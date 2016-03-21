@@ -54,10 +54,11 @@
                                 <div class="modal-body">
                                     <p style="color:red" id="err_sign_in"></p>
                                     <div class="form-group">
-                                        <input type='text' name='email' class='form-control' placeholder='Email address' />
+                                        <div style="color: red; font-size: 12px; display: none" id="log_in_error_user">Invalid Username or Password.</div>
+                                        <input type='text' id='log_in_email' name='email' class='form-control' placeholder='Email address' />
                                     </div>
                                     <div class="form-group">
-                                        <input type='password' name='password' class='form-control' placeholder='Password' />
+                                        <input type='password' id='log_in_password' name='password' class='form-control' placeholder='Password' />
                                     </div>
                                 </div>
                                 <div class="modal-footer  text-left">
@@ -81,25 +82,25 @@
                                     <p style="color:red; display: none; font-size: 11px" id="err_register"></p>
                                     <div class="row form-group">
                                         <div class="col-md-6">
-                                            <input type='text' name='given_name' class='form-control' placeholder='First Name' />
+                                            <input type='text' id='first_name' name='first_name' class='form-control' placeholder='First Name' />
                                         </div>
                                         <div class="col-md-6">
-                                            <input type='text' name='family_name' class='form-control' placeholder='Last Name' />
+                                            <input type='text' id='last_name' name='last_name' class='form-control' placeholder='Last Name' />
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <input type='text' name='email' class='form-control' placeholder='Email address' />
+                                        <div style="color: red; font-size: 12px; display: none" id="error_user">User already exists.</div>
+                                        <input type='text' id='email' name='email' class='form-control' placeholder='Email address' />
                                     </div>
                                     <div class="form-group">
-                                        <input type='password' name='password' class='form-control' placeholder='Password' />
-                                        <div style="color: red; font-size: 12px; display: none" id="error_pass">Passwords must be at least 8 characters and must contain at least     one number.</div>
+                                        <input type='password' id='password' name='password' class='form-control' placeholder='Password' />
                                     </div>
                                     <div class="form-group">
-                                        <input type='confirmPassword' name='password' class='form-control' placeholder='Confirm Password' />
+                                        <input type='password' id='password_confirm' name='password_confirm' class='form-control' placeholder='Confirm Password' />
                                     </div>
                                 </div>
                                 <div class="modal-footer text-left">
-                                        <input type='submit' name='email' class='btn branding-background btn-block btn-lg' value='Register' />
+                                        <input type='submit' class='btn branding-background btn-block btn-lg' value='Register' />
                                 </div>
                             </form>
 
@@ -108,48 +109,52 @@
                 </div>
 
 <script>
+
 $(document).ready(function () {
     $('#form_sign_in').on('submit', function (e) {
         //e.stopPropagation();
         $.ajax({
             type: "POST",
             url: '{{path('app_sign_in')}}',
-            data: { email:'email@gmail.com', password: '12345' },
+            data: 
+            { email:$('#log_in_email').val(), 
+              password: $('#log_in_password').val()
+            },
             success: function (data)
             {
                 var returnData = JSON.parse(data);
-                if (!returnData['success']) {
-                    alert('kahld');
-                    //$('#pError').html(obj['error']);
-                    //$('#pError').show();
-                    return false;
-                } else {
-                    // Redirect
+                if (returnData['success']=='false'){ 
+                    $('#log_in_error_user').show();
+                }else
                     window.location.href = returnData['url'];
-                }
             }
         });
         return false;
     });
 
     $('#form_register').on('submit', function (e) {
-        //e.stopPropagation();
+        if($('#password').val() != $('#password_confirm').val()){
+            alert('Passwords should be same.');
+            e.stopPropagation();
+            return false;
+        }
         $.ajax({
             type: "POST",
             url: '{{path('app_register')}}',
-            data: { email:'email@gmail.com', password: '12345', first_name:'syed', last_name:'omair' },
+            data: 
+            { email:$('#email').val(), 
+              password: $('#password').val(), 
+              first_name:$('#first_name').val(), 
+              last_name:$('#last_name').val() 
+            },
             success: function (data)
             {
                 var returnData = JSON.parse(data);
-                if (!returnData['success']) {
-                    alert('kahld');
-                    //$('#pError').html(obj['error']);
-                    //$('#pError').show();
-                    return false;
-                } else {
-                    // Redirect
+                //console.log(returnData);
+                if (returnData['success']=='false'){ 
+                    $('#error_user').show();
+                }else
                     window.location.href = returnData['url'];
-                }
             }
         });
         return false;

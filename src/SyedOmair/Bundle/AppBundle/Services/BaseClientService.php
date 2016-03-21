@@ -3,6 +3,8 @@ namespace SyedOmair\Bundle\AppBundle\Services;
 
 use Guzzle\Http\Client;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Guzzle\Http\Exception\ServerErrorResponseException;
+use Guzzle\Http\Exception\BadResponseException;
 
 class BaseClientService
 {
@@ -90,7 +92,12 @@ class BaseClientService
             $response = $request->send();
             $responseBody= $response->getBody();
         }
-        catch (BadResponseException $e) 
+        catch(ServerErrorResponseException $e)
+        {
+            if ($e->getResponse())
+                $responseBody =  $e->getResponse()->getBody();
+        }
+        catch(BadResponseException $e)
         {
             if ($e->getResponse())
                 $responseBody =  $e->getResponse()->getBody();

@@ -7,6 +7,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PublicController extends Controller
 {
+    public function signOutAction()
+    {
+        $session = $this->get('session');
+        $session->remove('username');
+        $session->remove('password');
+        return $this->redirectToRoute('app_index');
+    }
     public function signInAction()
     {
         $logger = $this->get('logger');
@@ -15,15 +22,21 @@ class PublicController extends Controller
         $email = $request->get('email');
         $password = $request->get('password');
 
-        $error = '';
+        $errorCode = '0';
+        $success = 'true';
 
         if ($request->isMethod('POST')) {
             $logger->info('password='.$password);
             $api = $this->get('client_service')->authenticate($email, $password);
+            if($api['status']=='200'){
+               $success = 'true';
+            }else{
+               $success = 'false';
+            }
             $logger->info('authenticate='.json_encode($api));
 
             $url = $this->generateUrl('app_index');
-            $response = new Response(json_encode(array('success' => true, 'url' => $url, 'error_code' => '0')));
+            $response = new Response(json_encode(array('success' => $success, 'url' => $url, 'error_code' => $errorCode)));
         }
         return $response;
     }
@@ -44,10 +57,19 @@ class PublicController extends Controller
         $logger->info('password='.$password);
         $error = '';
 
+        $errorCode = '0';
+        $success = 'true';
         if($request->isMethod('POST')) {
             $parameter = array('email'=>$email, 'password'=>$password, 'first_name'=>$firstName, 'last_name'=>$lastName);
             $api = $this->get('client_service')->createUser($parameter);
-            $logger->info('createUser'.json_encode($api));
+            if($api['status']=='200'){
+               $logger->info('createUser=>'.json_encode($api));
+               $success = 'true';
+            }else{
+               $logger->info('createUser=>'.json_encode($api));
+               $errorCode = $api['data']['code'];
+               $success = 'false';
+            }
             
             $logger->info('username='.$email);
             $logger->info('password='.$password);
@@ -55,7 +77,7 @@ class PublicController extends Controller
             $logger->info('authenticate='.json_encode($api));
 
             $url = $this->generateUrl('app_index');
-            $response = new Response(json_encode(array('success' => true, 'url' => $url, 'error_code' => '0')));
+            $response = new Response(json_encode(array('success' => $success, 'url' => $url, 'error_code' => $errorCode)));
         }
         return $response;
     }

@@ -19,6 +19,10 @@ app_sign_in:
     pattern:  /sign-in
     defaults: { _controller: AppBundle:Public:signIn }
 
+app_sign_out:
+    pattern:  /sign-out
+    defaults: { _controller: AppBundle:Public:signOut }
+
 app_register:
     pattern:  /register
     defaults: { _controller: AppBundle:Public:register }
