@@ -13,17 +13,17 @@ class ApiClientService extends BaseClientService
 
     public function findCategories($catalog_id)
     {
-        return $this->getRequest('api/categories/'.$catalog_id);
+        return $this->getRequest('categories/'.$catalog_id);
     }
 
     public function findProducts($category_id)
     {
-        return $this->getRequest('api/products/'.$category_id);
+        return $this->getRequest('products/'.$category_id);
     }
 
     public function findProduct($product_id)
     {
-        return $this->getRequest('api/product/'.$product_id);
+        return $this->getRequest('product/'.$product_id);
     }
 
     public function createUser($parameters)

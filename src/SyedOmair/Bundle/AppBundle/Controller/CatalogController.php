@@ -7,7 +7,7 @@ class CatalogController extends Controller
 {
     public function indexAction(){
 
-        return $this->render('AppBundle:Catalog:index.html.twig');
+        return $this->redirectToRoute('app_products');
     }
 
     public function getProductsAction(){
