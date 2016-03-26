@@ -35,6 +35,6 @@ class ApiClientService extends BaseClientService
     {
         $this->session->set('username', $username);
         $this->session->set('password', $password);
-        return $this->getRequest('api/authenticate');
+        return $this->getRequest('api/api-login');
     }
 }
