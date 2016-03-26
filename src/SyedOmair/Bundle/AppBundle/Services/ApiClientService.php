@@ -28,13 +28,13 @@ class ApiClientService extends BaseClientService
 
     public function createUser($parameters)
     {
-        return $this->postNewRequest('api/user', $parameters);
+        return $this->postNewRequest('secure/user', $parameters);
     }
 
     public function authenticate($username, $password)
     {
         $this->session->set('username', $username);
         $this->session->set('password', $password);
-        return $this->getRequest('api/api-login');
+        return $this->getRequest('secure/api-login');
     }
 }

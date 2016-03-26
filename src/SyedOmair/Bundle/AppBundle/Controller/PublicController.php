@@ -67,7 +67,7 @@ class PublicController extends Controller
                $success = 'true';
             }else{
                $logger->info('createUser=>'.json_encode($api));
-               $errorCode = $api['data']['code'];
+               $errorCode = $api['data']['error_code'];
                $success = 'false';
             }
             
